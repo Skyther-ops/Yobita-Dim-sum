@@ -1,0 +1,262 @@
+/* --- Wrapper --- */
+.map-wrapper {
+    max-width: 100%; /* Use full width */
+    margin: 0;
+    padding: 20px;
+    height: 85vh; /* Make map taller */
+    display: flex;
+    flex-direction: column;
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 15px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.back-link {
+    color: #bbb; /* Subtle grey on dark background */
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: color 0.2s;
+    display: inline-block;
+}
+
+.back-link:hover {
+    color: #fff; /* White on hover */
+}
+
+.page-title { margin: 0; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
+/* --- BLUEPRINT CONTAINER --- */
+.blueprint-container {
+    position: relative;
+    width: 100%;
+    flex-grow: 1; /* Fill remaining height */
+    background-color: #EAEAEA; /* Clean Light Grey Floor */
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    overflow: hidden;
+    border: 10px solid #333; /* Dark Walls */
+}
+
+/* --- ZONES (Low Z-Index) --- */
+.area-kitchen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 22%;
+    background: #CCCCCC; /* Darker Grey */
+    border-bottom: 5px solid #333;
+    border-right: 5px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    font-weight: 800;
+    letter-spacing: 2px;
+    z-index: 1; /* Ensure this is LOWER than tables */
+}
+
+.area-vip-zone {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25%;
+    height: 100%;
+    background-color: #F8F1E5; /* Warm Beige */
+    border-left: 6px double #333;
+    z-index: 1; /* Ensure this is LOWER than tables */
+}
+
+.zone-label {
+    position: absolute;
+    bottom: 40px;
+    right: -10px;
+    font-size: 4rem;
+    font-weight: 900;
+    color: rgba(0,0,0,0.06);
+    transform: rotate(-90deg);
+    transform-origin: 0 0;
+    white-space: nowrap;
+}
+
+/* --- FIXTURES --- */
+.area-bar {
+    position: absolute;
+    top: 0;
+    left: 60%;
+    width: 15%; /* Gap between kitchen and VIP */
+    height: 12%;
+    background: #444;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    border-radius: 0 0 10px 10px;
+    z-index: 2;
+}
+
+.area-entrance {
+    position: absolute;
+    bottom: 0;
+    left: 30%;
+    width: 160px;
+    height: 15px;
+    background: #fff;
+    border-left: 5px solid #333;
+    border-right: 5px solid #333;
+    text-align: center;
+    line-height: -30px;
+    color: #fff;
+    font-weight: bold;
+    z-index: 2;
+}
+.area-entrance::before {
+    content: 'ENTRANCE';
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #333;
+    font-weight: 800;
+}
+
+/* --- TABLES (High Z-Index = Clickable) --- */
+.table-node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    z-index: 100; /* CRITICAL: Must be higher than Kitchen/VIP */
+}
+
+.table-node:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    z-index: 110;
+}
+
+/* Shapes & Colors */
+.shape-regular {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border-width: 3px;
+    border-style: solid;
+}
+
+.shape-vip {
+    width: 120px;
+    height: 80px;
+    border-radius: 12px;
+    border-width: 4px;
+    border-style: solid;
+}
+
+/* Status Colors (Clean) */
+.table-node.available { background: #fff; border-color: #28a745; color: #28a745; }
+.table-node.occupied { background: #fff; border-color: #007bff; color: #007bff; }
+.table-node.reserved { background: #fff; border-color: #ffc107; color: #d39e00; }
+
+.table-node.occupied { background: #e3f2fd; } /* Slight blue tint for occupied */
+
+/* Chairs */
+.chair {
+    position: absolute;
+    background: #888;
+    border-radius: 4px;
+    z-index: 1; /* Under table */
+}
+
+.shape-regular .chair { width: 30px; height: 10px; }
+.shape-regular .c-top { top: -14px; left: 50%; transform: translateX(-50%); }
+.shape-regular .c-bottom { bottom: -14px; left: 50%; transform: translateX(-50%); }
+
+.shape-vip .chair { width: 40px; height: 10px; }
+.shape-vip .c-top { top: -14px; left: 50%; transform: translateX(-50%); }
+.shape-vip .c-bottom { bottom: -14px; left: 50%; transform: translateX(-50%); }
+.shape-vip .c-left { width: 10px; height: 40px; top: 50%; left: -14px; transform: translateY(-50%); }
+.shape-vip .c-right { width: 10px; height: 40px; top: 50%; right: -14px; transform: translateY(-50%); }
+
+/* --- Legend --- */
+.map-legend { display: flex; gap: 15px; background: rgba(0,0,0,0.2); padding: 8px 16px; border-radius: 20px; }
+.legend-item { color: #fff; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; font-weight: 500; }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot.available { background: #28a745; }
+.dot.occupied { background: #007bff; }
+.dot.reserved { background: #ffc107; }
+
+/* --- MODAL --- */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    backdrop-filter: blur(3px);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-box {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 320px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.close-icon {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #aaa;
+}
+.close-icon:hover { color: #333; }
+
+#modalTitle { margin-top: 0; color: #333; font-size: 1.8rem; }
+.modal-info { margin: 15px 0 25px 0; color: #666; font-size: 1rem; }
+
+.action-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    color: white;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+.btn-green { background: #28a745; }
+.btn-green:hover { background: #218838; }
+.btn-blue { background: #007bff; }
+.btn-blue:hover { background: #0069d9; }
+.btn-gray { background: #6c757d; cursor: not-allowed; }
