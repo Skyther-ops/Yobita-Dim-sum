@@ -1,0 +1,669 @@
+/* css/ai_forecast.css */
+
+/* --- Animations (Matches manageTables) --- */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+body {
+    background-color: #f8f9fa;
+    font-family: sans-serif; /* Adjust to your main font */
+}
+
+/* --- Main Layout --- */
+.admin-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    color: var(--accent-dark, #a05252);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: var(--primary, #e5a9a9);
+}
+
+.page-header {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    animation: fadeInDown 0.5s ease-out;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-header h1 {
+    color: #333;
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+/* --- Status & Alerts --- */
+.ai-status-badge {
+    background-color: #e2e6ea;
+    color: #495057;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ffeeba;
+}
+
+/* --- Content Sections (Matches form-section) --- */
+.forecast-section {
+    background-color: #f9fafb; /* Light gray background */
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2.5rem;
+    border: 1px solid #eee;
+    animation: fadeInUp 0.5s ease-out 0.2s;
+    animation-fill-mode: forwards;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* --- Custom Date Range --- */
+.custom-range-container {
+    display: none; /* Hidden by default */
+    gap: 15px;
+    align-items: center;
+    padding: 15px;
+    background-color: #f1f3f5;
+    border-radius: 8px;
+    margin-top: 15px;
+    animation: fadeInDown 0.4s ease-out;
+}
+
+.custom-range-container label {
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 0;
+}
+
+.custom-range-container input[type="date"] {
+    border: 1px solid #ccc;
+    padding: 5px 8px;
+    border-radius: 5px;
+}
+/* --- Chart Specifics --- */
+.chart-container {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    position: relative;
+    height: 400px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    overflow: hidden;
+}
+
+.chart-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: 600;
+    color: #555;
+}
+
+.chart-loading-overlay.visible {
+    display: flex;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #4e73df;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.chart-legend {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.legend-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+/* --- Table Styles (Matches manageTables) --- */
+.table-responsive {
+    overflow-x: auto;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+table th, table td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+table th {
+    background-color: #f1f3f5;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+table tbody tr:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-2px);
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.price-tag {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    color: #2d3436;
+    background: #e9ecef;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* --- Responsive --- */
+@media screen and (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .chart-container {
+        height: 300px;
+    }
+}
+
+/* --- AI STATUS BADGE --- */
+.ai-status-badge {
+    background-color: #f0fdf4; /* Very light green bg */
+    color: #15803d; /* Dark green text */
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #bbf7d0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.pulse-dot {
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-color: #22c55e; /* Bright green */
+    border-radius: 50%;
+    box-shadow: 0 0 0 rgba(34, 197, 94, 0.4);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    }
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+    }
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+
+/* --- Report Action Buttons --- */
+.report-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.print-btn {
+    background-color: #4e73df;
+    color: white;
+}
+
+.print-btn:hover {
+    background-color: #3d5fd1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(78, 115, 223, 0.3);
+}
+
+.pdf-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.pdf-btn:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+.action-btn ion-icon {
+    font-size: 1.2rem;
+}
+
+/* --- Report Content Wrapper --- */
+.report-content {
+    position: relative;
+}
+
+/* --- Report Header for Print/PDF --- */
+.report-header-print {
+    display: none;
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 3px double #000;
+}
+
+.report-title-print {
+    font-size: 22pt;
+    font-weight: bold;
+    margin: 0 0 5px 0;
+    letter-spacing: 2px;
+    color: #000;
+}
+
+.report-subtitle-print {
+    font-size: 16pt;
+    font-weight: bold;
+    margin: 0;
+    color: #000;
+}
+
+.report-footer-print {
+    display: none;
+    text-align: right;
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #ccc;
+}
+
+.report-footer-print p {
+    margin: 0;
+    font-size: 10pt;
+    color: #666;
+    font-style: italic;
+}
+
+/* --- Print Styles --- */
+@media print {
+    /* Show report header and footer */
+    .report-header-print,
+    .report-footer-print {
+        display: block !important;
+    }
+
+    /* Hide navigation and non-essential elements */
+    header, footer, .back-link, .report-actions, .ai-status-badge {
+        display: none !important;
+    }
+
+    /* Reset body and container for printing */
+    body {
+        background: white !important;
+        margin: 0;
+        padding: 0;
+    }
+
+    .main-wrapper {
+        margin: 0;
+        padding: 0;
+    }
+
+    .admin-container {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 20px !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        background: white !important;
+        page-break-inside: avoid;
+    }
+
+    .page-header {
+        border-bottom: 3px solid #000 !important;
+        margin-bottom: 20px !important;
+        padding-bottom: 10px !important;
+    }
+
+    .page-header h1 {
+        font-size: 24pt !important;
+        color: #000 !important;
+        margin: 0 !important;
+    }
+
+    /* Section styling */
+    .forecast-section, .tables-list-section {
+        page-break-inside: avoid;
+        margin-bottom: 30px !important;
+        padding: 15px !important;
+        background: white !important;
+        border: 1px solid #000 !important;
+        border-radius: 0 !important;
+    }
+
+    .section-title {
+        font-size: 16pt !important;
+        color: #000 !important;
+        margin-bottom: 15px !important;
+        margin-top: 0 !important;
+        padding-bottom: 5px !important;
+        border-bottom: 2px solid #000 !important;
+    }
+
+    /* Chart container - FIXED */
+    .chart-container {
+        height: 350px !important;
+        max-height: 350px !important;
+        page-break-inside: avoid;
+        border: 2px solid #000 !important;
+        padding: 10px !important;
+        background: white !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+        margin-bottom: 10px !important;
+    }
+
+    .chart-container canvas {
+        max-width: 100% !important;
+        max-height: 100% !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .chart-legend {
+        margin-top: 10px !important;
+        font-size: 10pt !important;
+        padding: 5px 0 !important;
+    }
+
+    /* Table styling */
+    .tables-list-section {
+        margin-top: 30px !important;
+    }
+
+    .table-responsive {
+        page-break-inside: avoid;
+        border: 1px solid #000 !important;
+        overflow: visible !important;
+    }
+
+    table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+    }
+
+    table th {
+        background-color: #333 !important;
+        color: white !important;
+        padding: 10px !important;
+        font-size: 11pt !important;
+        border: 1px solid #000 !important;
+    }
+
+    table td {
+        padding: 8px !important;
+        border: 1px solid #000 !important;
+        font-size: 10pt !important;
+    }
+
+    table tbody tr {
+        page-break-inside: avoid;
+    }
+
+    table tbody tr:nth-child(even) {
+        background-color: #f5f5f5 !important;
+    }
+
+    .price-tag {
+        background: transparent !important;
+        padding: 0 !important;
+        font-weight: bold !important;
+    }
+
+    /* Hide animations and transitions */
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    /* Page breaks */
+    .forecast-section {
+        page-break-after: auto;
+    }
+
+    @page {
+        margin: 1cm;
+        size: A4;
+    }
+}
+
+/* --- New Forecast Controls (Segmented Pill Style) --- */
+.forecast-controls {
+    background: #f1f3f5;
+    padding: 5px;
+    border-radius: 50px; /* Pill shape container */
+    display: inline-flex;
+    gap: 0;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+}
+
+.forecast-btn {
+    border: none;
+    background: transparent;
+    padding: 10px 24px;
+    border-radius: 40px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #7a6a6a;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.forecast-btn:hover {
+    color: #333;
+}
+
+/* Active State: White pill with Orange text & Shadow */
+.forecast-btn.active {
+    background: #fff;
+    color: #fd7e14; /* Yobita Orange */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* --- New Predicted Revenue Card --- */
+.revenue-card {
+    background: linear-gradient(135deg, #ffffff 0%, #fffbf5 100%);
+    border: 1px solid #ffe8cc;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(253, 126, 20, 0.06);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 25px;
+    transition: transform 0.3s ease;
+}
+
+.revenue-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(253, 126, 20, 0.12);
+}
+
+/* Background Decoration Icon */
+.revenue-card::before {
+    content: '$';
+    position: absolute;
+    right: -10px;
+    top: -20px;
+    font-size: 140px;
+    color: rgba(253, 126, 20, 0.04);
+    font-family: serif;
+    font-weight: 800;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.revenue-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #999;
+    margin-bottom: 8px;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.revenue-label ion-icon {
+    color: #fd7e14;
+    font-size: 1.1rem;
+}
+
+.revenue-value {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #333;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: -1px;
+}
+
+/* Small trend indicator below value (optional visual flair) */
+.revenue-subtext {
+    font-size: 0.85rem;
+    color: #fd7e14;
+    margin-top: 10px;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+}
+
+/* --- Improved Custom Range Inputs --- */
+.custom-range-container {
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    margin-top: 15px;
+    gap: 15px;
+}
+
+.custom-range-container input[type="date"] {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: #555;
+    font-family: inherit;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.custom-range-container input[type="date"]:focus {
+    border-color: #fd7e14;
+}
+
+.custom-range-container button#applyCustomRangeBtn {
+    background-color: #fd7e14;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.custom-range-container button#applyCustomRangeBtn:hover {
+    background-color: #e66b0d;
+}
